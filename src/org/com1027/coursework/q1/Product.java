@@ -1,5 +1,5 @@
-package org.com1027.coursework.q1;
 
+import org.com1027.coursework.q1.*;
 import java.util.ArrayList;
 
 public class Product {

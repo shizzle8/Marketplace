@@ -1,6 +1,8 @@
-package org.com1027.coursework.q2;
+//package src.org.com1027.coursework.q2;
 
 import java.util.ArrayList;
+
+import org.com1027.coursework.q2.*;
 
 
 public class BiddableProduct extends Product{
@@ -16,7 +18,27 @@ public class BiddableProduct extends Product{
 
   @Override
   public String displayHistory() {
-    // TODO Auto-generated method stub
+	 String[] name= {};
+    String text=Integer.toString(getProductId()) +": "+ getProductName()  + " = " ;
+     if(bids.isEmpty()) {
+    	 return Integer.toString(getProductId()) +" : "+ getProductName()  + " = no bids" ;
+     }
+     // DO THIS LOOK AT BUYNOW AND CHANGE IT FOR THIS, COMPARE TO TESTS
+     else {
+    	 for(Bid bids:bids) {
+    	      name[loop] = purchase.getBuyer().toString();
+    	      loop++;
+    	    }
+    	    
+    	    for(int i=0;i< name.length;i++) {
+    	     char[] text1 =  (name[i]).toCharArray();
+    	     for(int x=1; x<text1.length-1;i++) {
+    	       text1[x]='*';
+    	     }
+    	     text+= new String(text1) + " bought " + purchases.get(i).getQuantityPurchased() + "\n";
+    	    }
+    	    return text ;
+     }
     return null;
   }
 
@@ -50,8 +72,11 @@ public class BiddableProduct extends Product{
 
   @Override
   public boolean isProductSold() {
-    // TODO Auto-generated method stub
-    return false;
+    if(getCurrentPrice()>this.reservedPrice) {
+    	return true;
+    }
+    else {return false;}
+    
   }
   
   public boolean attemptedToPurchase(User user, Double bidValue) {
