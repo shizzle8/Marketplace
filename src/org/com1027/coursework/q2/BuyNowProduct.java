@@ -69,7 +69,7 @@ public class BuyNowProduct extends Product{
     
     for(int i=0;i< name.length;i++) {
      char[] text1 =  (name[i]).toCharArray();
-     for(int x=1; x<text1.length-1;i++) {
+     for(int x=1; x<text1.length-1;x++) {
        text1[x]='*';
      }
      text+= new String(text1) + " bought " + purchases.get(i).getQuantityPurchased() + "\n";

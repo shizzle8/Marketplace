@@ -19,23 +19,24 @@ public class BiddableProduct extends Product{
   @Override
   public String displayHistory() {
 	 String[] name= {};
+	 int loop=0;
     String text=Integer.toString(getProductId()) +": "+ getProductName()  + " = " ;
      if(bids.isEmpty()) {
     	 return Integer.toString(getProductId()) +" : "+ getProductName()  + " = no bids" ;
      }
-     // DO THIS LOOK AT BUYNOW AND CHANGE IT FOR THIS, COMPARE TO TESTS
+
      else {
     	 for(Bid bids:bids) {
-    	      name[loop] = purchase.getBuyer().toString();
+    	      name[loop] = bids.getBuyer().toString();
     	      loop++;
     	    }
     	    
     	    for(int i=0;i< name.length;i++) {
     	     char[] text1 =  (name[i]).toCharArray();
-    	     for(int x=1; x<text1.length-1;i++) {
+    	     for(int x=1; x<text1.length-1;x++) {
     	       text1[x]='*';
     	     }
-    	     text+= new String(text1) + " bought " + purchases.get(i).getQuantityPurchased() + "\n";
+    	     text+= "\n" + new String(text1) + " bid " + bids.get(i).getBidValue() + "\n";
     	    }
     	    return text ;
      }
@@ -44,8 +45,21 @@ public class BiddableProduct extends Product{
 
   @Override
   public String displayUserInfoForProduct() {
-    // TODO Auto-generated method stub
-    return null;
+	  String[] name= {};
+		 int loop=0;
+		 String text;
+	  for(Bid bids:bids) {
+	      name[loop] = bids.getBuyer().toString();
+	      loop++;
+	    }
+	    
+	     char[] text1 =  (name[name.length-1]).toCharArray();
+	     for(int x=1; x<text1.length-1;x++) {
+	       text1[x]='*';
+	     }
+	     text= "\n" + new String(text1) + " bid " + bids.get(bids.size()-1).getBidValue() + "\n";
+	    
+    return text;
   }
 
   @Override
@@ -81,12 +95,12 @@ public class BiddableProduct extends Product{
   
   public boolean attemptedToPurchase(User user, Double bidValue) {
     // some illegal arguments that cannot be inputed.
-    if (bids==null || user==null || bidValue<0.01) {
+    if (user==null || bidValue<0.01) {
       throw new IllegalArgumentException();
     }
      // now if there isn't a bid the user can place a bid at any price
     if(bids.isEmpty()) {
-      this.bids.add(new Bid(null, bidValue));
+      this.bids.add(new Bid(user, bidValue));
       return true;
     }
      

@@ -55,35 +55,26 @@ public class AuctionHouse {
     User value = null;
     value = forSaleProducts.get(product);
     forSaleProducts.remove(product);
-    System.out.println(product.getHighestBid());
+    System.out.println(product.getCurrentPrice());
     
     /* if there isnt any bids the products will go to the unsold products map
      since it didnt get sold.*/
-    if(product.getHighestBid()==null) {
+    if(product.isProductSold()==false) {
       unsoldProducts.put(product, value);
       System.out.println(displayUnsoldProducts());
     }
     /* When the bidder successfully outbids the bid will be stored in the
      soldProducts
      */
-    else if(product.getHighestBid().getBidValue()>product.getReservedPrice()) {
+    else  {
       soldProducts.put(product, value);
       System.out.println(displaySoldProducts());
     }
     /* if the bid price doesnt reach the reserved price then it will be stored
       in the unsoldproducts*/
-    else if(product.getHighestBid().getBidValue()<product.getReservedPrice()) {
-      unsoldProducts.put(product, value);
-      System.out.println(displayUnsoldProducts());
-    }
-    
-    else {
-      soldProducts.put(product, value);
-      System.out.println(displaySoldProducts());
-    }
   }
   
-  public Boolean placeBid(Product product,User user, Double bidValue) {
+  public Boolean placeBid(BiddableProduct product,User user, Double bidValue) {
     if(product==null || user==null) {
       throw new IllegalArgumentException();
     }  
@@ -92,7 +83,7 @@ public class AuctionHouse {
       return false;
     }
     else {
-      return product.placeBid(user,bidValue);
+      return product.attemptedToPurchase(user, bidValue);
     }
   }
   
