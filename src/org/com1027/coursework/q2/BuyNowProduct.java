@@ -2,7 +2,7 @@ package org.com1027.coursework.q2;
 
 import java.util.ArrayList;
 
-import sun.security.util.Length;
+
 
 public class BuyNowProduct extends Product{
   
@@ -10,10 +10,17 @@ public class BuyNowProduct extends Product{
   private int quantity;
   private ArrayList<Purchase> purchases = new ArrayList<Purchase>();
   
-  public BuyNowProduct(int ID, String productName, int quantity, int price) {
-    super(ID, productName);
+  public BuyNowProduct(int ID, String productName, double price,int quantity) {
+    
+	
+	  
+	super(ID, productName);
     this.quantity=quantity;
     this.price=price;
+    
+    if(productName==null || price<0.01 || quantity<1) {
+		  throw new IllegalArgumentException();
+	  }
     
   }
 
@@ -39,45 +46,57 @@ public class BuyNowProduct extends Product{
   
   @Override
   public String displayHistory() {
-   String text= Integer.toString(getProductId()) + ": " + getProductName() + " quantity: " + this.quantity + "\n"
-       + "buy now history:" + "\n";
-   if(this.purchases.isEmpty()) {
-     text += "no purchases";
-   }
+	  int quantity=0;
+	  for(Purchase purchase:purchases) {
+		  quantity += purchase.getQuantityPurchased();
+	  }
+	  String text= Integer.toString(getProductId()) + ": " + getProductName() + " quantity: " + (this.quantity+quantity) +  "\n";
+	  if(this.purchases.isEmpty()) {
+		  text += "no purchases";
+	  }
    
-   else {
-     for(Purchase purchase:purchases) {
+	  else {
+		  text+="buy now history: " + "\n";
+		  for(Purchase purchase:purchases) {
        
-       text+= purchase.getBuyer().toString() + " bought " + purchase.getQuantityPurchased() + "\n" ;
-     }
-   }
+			  text+= purchase.getBuyer().toString() + " bought " + purchase.getQuantityPurchased() + "\n" ;
+		  }
+	  }
    
-   return text;
-  }
+	  return text;
+  	}
   
   @Override
   public String displayUserInfoForProduct() {
-    String[] name= {};
- 
-    String text=Integer.toString(getProductId()) +": "+ getProductName()  + " quantity: " + this.quantity + "\n"
-        + "buy now history: \n" ;
-    int loop=0;
-    for(Purchase purchase:purchases) {
-      name[loop] = purchase.getBuyer().toString();
-      loop++;
-    }
+	  String text="";
+	  if(purchases.isEmpty()) {
+		  return "";
+	  }
+	  String[] name= new String[purchases.size()];
+	  int loop=0;
+	  for(Purchase purchase:purchases) {
+		  name[loop] = purchase.getBuyer().toString();
+		  loop++;
+	  }
     
-    for(int i=0;i< name.length;i++) {
-     char[] text1 =  (name[i]).toCharArray();
-     for(int x=1; x<text1.length-1;x++) {
-       text1[x]='*';
-     }
-     text+= new String(text1) + " bought " + purchases.get(i).getQuantityPurchased() + "\n";
-    }
-    return text ;
+	  for(Purchase purchase:purchases) {
+  
+		  if(purchases.size()<2) {
+			  text= purchase.getBuyer().toString() + " bought " + purchase.getQuantityPurchased();
+		  }
+		  else {
+			  text+= purchase.getBuyer().toString() + " bought " + purchase.getQuantityPurchased() + "\n";
+		  }
+	  }
+	  System.out.println(text);
+	  return text ;
     
   }
-
+  
+  public int getQuantity() {
+	  return this.quantity;
+  }
+  
   @Override
   public double getCurrentPrice() {
     

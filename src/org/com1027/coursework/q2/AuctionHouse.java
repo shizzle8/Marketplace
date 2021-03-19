@@ -10,7 +10,16 @@ public class AuctionHouse {
   private HashMap<Product, User> soldProducts= new HashMap<Product, User>();
   private HashMap<Product, User> unsoldProducts= new HashMap<Product, User>();
   
-  
+  public boolean buyNow(BuyNowProduct product,User user, int quantity) {
+	  if(product.attemptToPurchase(user, quantity) ) {
+		  soldProducts.put(product,user);
+		  return true;
+	  }
+	  
+	  else {
+		  return false;
+	  }
+  }
   // method just checks if a product exist true or false boolean
   public boolean checkExistence (Product product) {
       if( forSaleProducts.containsKey(product)) {     
@@ -30,7 +39,8 @@ public class AuctionHouse {
     }
     // for loop to keep adding the sold products onto the string text that can be returned after
     for(HashMap.Entry<Product, User> p:soldProducts.entrySet()) {
-      text += p.getKey().getProductId()+" - "+p.getValue().toString()+ " bid £"+ p.getKey().getHighestBid().getBidValue() +"\n";
+    	
+    	text += p.getKey().getProductId()+" - " + p.getKey().displayUserInfoForProduct() + "\n";
     }
     return text;
   }
@@ -39,7 +49,7 @@ public class AuctionHouse {
   public String displayUnsoldProducts() {
     String text="";
     if(unsoldProducts.isEmpty()) {
-      return "lol";
+      return "";
     }
     else {  
       for(HashMap.Entry<Product, User> p:unsoldProducts.entrySet()) {
@@ -75,13 +85,13 @@ public class AuctionHouse {
   }
   
   public Boolean placeBid(BiddableProduct product,User user, Double bidValue) {
-    if(product==null || user==null) {
-      throw new IllegalArgumentException();
-    }  
     
-    if(!forSaleProducts.containsKey(product)) {
-      return false;
-    }
+	  if(product==null || user==null) {
+		  throw new IllegalArgumentException();
+	  }
+	  
+	
+  
     else {
       return product.attemptedToPurchase(user, bidValue);
     }

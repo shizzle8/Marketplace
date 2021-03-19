@@ -1,8 +1,9 @@
-//package src.org.com1027.coursework.q2;
+package org.com1027.coursework.q2;
+
+
 
 import java.util.ArrayList;
 
-import org.com1027.coursework.q2.*;
 
 
 public class BiddableProduct extends Product{
@@ -18,57 +19,40 @@ public class BiddableProduct extends Product{
 
   @Override
   public String displayHistory() {
-	 String[] name= {};
 	 int loop=0;
-    String text=Integer.toString(getProductId()) +": "+ getProductName()  + " = " ;
+    String text=Integer.toString(getProductId()) +": "+ getProductName()  + " = " + "\n" ;
      if(bids.isEmpty()) {
-    	 return Integer.toString(getProductId()) +" : "+ getProductName()  + " = no bids" ;
+    	 return Integer.toString(getProductId()) +": "+ getProductName()  + " = no bids" ;
      }
 
      else {
     	 for(Bid bids:bids) {
-    	      name[loop] = bids.getBuyer().toString();
-    	      loop++;
+    		 text+= bids.getBuyer().toString() + " bid £" + bids.getBidValue() + "\n";
     	    }
     	    
-    	    for(int i=0;i< name.length;i++) {
-    	     char[] text1 =  (name[i]).toCharArray();
-    	     for(int x=1; x<text1.length-1;x++) {
-    	       text1[x]='*';
-    	     }
-    	     text+= "\n" + new String(text1) + " bid " + bids.get(i).getBidValue() + "\n";
-    	    }
     	    return text ;
      }
-    return null;
+   
   }
 
   @Override
   public String displayUserInfoForProduct() {
-	  String[] name= {};
-		 int loop=0;
-		 String text;
-	  for(Bid bids:bids) {
-	      name[loop] = bids.getBuyer().toString();
-	      loop++;
-	    }
-	    
-	     char[] text1 =  (name[name.length-1]).toCharArray();
-	     for(int x=1; x<text1.length-1;x++) {
-	       text1[x]='*';
-	     }
-	     text= "\n" + new String(text1) + " bid " + bids.get(bids.size()-1).getBidValue() + "\n";
-	    
-    return text;
+	  if(bids.isEmpty()) {
+		  return "";
+	  }
+	  else {
+	     return  bids.get(bids.size()-1).getBuyer().toString() + " bid £" + bids.get(bids.size()-1).getBidValue();
+	  }
+  
   }
 
   @Override
   public double getCurrentPrice() {
     //created a variable to store the lowest possible value
     double lowestValue = Double.MIN_VALUE;
-    Bid highestBid = null;
+    Bid highestBid =null;
     // we go through a for loop which goes through the bids, only if it isnt empty
-    if(bids!=null) {
+    if(!bids.isEmpty()) {
       for(Bid i:bids) {
       // if this condition meets the lowest value is replaced with one that is greater
         if(i.getBidValue()>lowestValue) {
@@ -80,8 +64,9 @@ public class BiddableProduct extends Product{
       // when the loop end with have the highest bid which we just return.
       return highestBid.getBidValue();
     }
-    // else return 0
+    else{// else return 0
     return 0;
+    }
   }
 
   @Override

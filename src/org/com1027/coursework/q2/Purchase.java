@@ -15,7 +15,7 @@ public class Purchase {
       return this.buyer;
     }
     
-    public double getQuantityPurchased() {
+    public int getQuantityPurchased() {
       return this.quantityPurchased;
     }
     

@@ -18,7 +18,16 @@ public class User {
   
   // this method just returns the name
   public String toString() {
-    
-    return this.name;
+    char[] text1 =  (this.name).toCharArray();
+    char[] pname = new char[5];
+    for(int x=1; x<6;x++) {
+   	 pname[0]= text1[0];
+   	 if(x==5) {
+   		 pname[4]=text1[text1.length-1];
+   		 break;
+        }
+   	 pname[x]='*';
+    }
+    return new String(pname);
   }
 }
