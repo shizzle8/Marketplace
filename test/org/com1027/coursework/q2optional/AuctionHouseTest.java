@@ -1,4 +1,3 @@
-
 package org.com1027.coursework.q2optional;
 
 import static org.junit.Assert.assertEquals;
@@ -29,7 +28,7 @@ public class AuctionHouseTest {
     User user = new User("Stella");
     assertEquals(false,ahouse1.checkExistence(product));
     assertEquals("",ahouse1.displaySoldProducts());
-    assertEquals(false,ahouse1.placeBid(product, user, 10.00));       
+    assertEquals(true,ahouse1.placeBid(product, user, 10.00));       
  }  
 
 
@@ -196,8 +195,8 @@ public class AuctionHouseTest {
     ahouse1.endAuction(product2);  
     System.out.println("display unsold auction with bids meeting reserve \n");
     System.out.println(ahouse1.displaySoldProducts());
-    assertThat(ahouse1.displaySoldProducts(), 
-        anyOf(is("1 - S***a bid Â£12.0"+"\n"+"2 - S***a bid Â£22.0"+"\n"), is("2 - S***a bid Â£22.0"+"\n"+"1 - S***a bid Â£12.0"+"\n")));
+    assertThat(ahouse1.displaySoldProducts(),
+        anyOf(is("1 - S***a bid £12.0"+"\n"+"2 - S***a bid £22.0"+"\n"), is("2 - S***a bid £22.0"+"\n"+"1 - S***a bid £12.0"+"\n")));
  } 
   
 
@@ -300,7 +299,31 @@ public class AuctionHouseTest {
   
   @Test
   public void testHighestSoldProducts() {
-    //ADD CODE FOR TEST  HERE
-    
+	  AuctionHouse ahouse1 = new AuctionHouse();
+	  BiddableProduct product1 = new BiddableProduct(1,"teddy",5.00);
+	  BiddableProduct product2 = new BiddableProduct(2,"truck",10.00);
+	  BuyNowProduct product3 = new BuyNowProduct(3,"doll",20.00,5);
+	  BuyNowProduct product4 = new BuyNowProduct(4,"ball",10.00,10);
+	  
+	  User user = new User("Stella");
+	  User user2 = new User("Helen");
+	  ahouse1.register(product1, user);  
+	  ahouse1.register(product2, user); 
+	  ahouse1.register(product3, user); 
+	  ahouse1.register(product4, user); 
+	  ahouse1.placeBid(product1, user, 2.00);
+	  ahouse1.placeBid(product2, user, 10.00);
+	  ahouse1.placeBid(product2, user2, 15.00);
+	  ahouse1.placeBid(product2, user, 20.00);
+	  ahouse1.buyNow(product3, user, 5);
+	  ahouse1.buyNow(product4, user, 7);
+	  
+	  ahouse1.endAuction(product1);
+	  ahouse1.endAuction(product2); 
+	  ahouse1.endAuction(product3);  
+	  ahouse1.endAuction(product4);  
+	  System.out.println(ahouse1.getHighestValuedSoldProducts());
+	  assertThat(ahouse1.getHighestValuedSoldProducts(), 
+	          anyOf(is("3: 20.0\n"+"4: 10.0\n"+"2: 20.0\n")));
   } 
 }
