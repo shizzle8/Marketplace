@@ -39,18 +39,18 @@ public class BuyNowProduct extends Product{
   }
   
   public int howManyPurchases() {
-    
-    return purchases.size();
+	  int quantity=0;
+    for(Purchase purchase:purchases) {
+    	quantity +=purchase.getQuantityPurchased();
+    }
+    return quantity;
   }
   
   
   @Override
   public String displayHistory() {
-	  int quantity=0;
-	  for(Purchase purchase:purchases) {
-		  quantity += purchase.getQuantityPurchased();
-	  }
-	  String text= Integer.toString(getProductId()) + ": " + getProductName() + " quantity: " + (this.quantity+quantity) +  "\n";
+	
+	  String text= Integer.toString(getProductId()) + ": " + getProductName() + " quantity: " + (getQuantity()) +  "\n";
 	  if(this.purchases.isEmpty()) {
 		  text += "no purchases";
 	  }
@@ -72,15 +72,8 @@ public class BuyNowProduct extends Product{
 	  if(purchases.isEmpty()) {
 		  return "";
 	  }
-	  String[] name= new String[purchases.size()];
-	  int loop=0;
 	  for(Purchase purchase:purchases) {
-		  name[loop] = purchase.getBuyer().toString();
-		  loop++;
-	  }
-    
-	  for(Purchase purchase:purchases) {
-  
+		  
 		  if(purchases.size()<2) {
 			  text= purchase.getBuyer().toString() + " bought " + purchase.getQuantityPurchased();
 		  }
@@ -94,7 +87,7 @@ public class BuyNowProduct extends Product{
   }
   
   public int getQuantity() {
-	  return this.quantity;
+	  return this.quantity+howManyPurchases();
   }
   
   @Override

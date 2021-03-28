@@ -191,7 +191,7 @@ public class AuctionHouseTest {
     //System.out.println("display sold auction with bids meeting reserve \n");
     //System.out.println(ahouse1.displaySoldProducts());
     assertThat(ahouse1.displaySoldProducts(), 
-        anyOf(is("1 - S***a bid Â£12.0"+"\n"+"2 - S***a bid Â£22.0"+"\n"), is("2 - S***a bid Â£22.0"+"\n"+"1 - S***a bid Â£12.0"+"\n")));
+        anyOf(is("1 - S***a bid £12.0"+"\n"+"2 - S***a bid £22.0"+"\n"), is("2 - S***a bid £22.0"+"\n"+"1 - S***a bid £12.0"+"\n")));
  } 
   
 
@@ -317,6 +317,8 @@ public class AuctionHouseTest {
          "1 at a cost of 5.0\n"+
          "2 at a cost of 10.0\n",
          user.displayAllPurchases());
+    
+    System.out.println(ahouse1.displayUnsoldProducts());
 
  } 
   
@@ -331,7 +333,7 @@ public class AuctionHouseTest {
    * The test case doesn't have to do the assert, you can use System.out here to demonstrate the functionality
    * 
    */
-  //ADD CODE FOR TEST  HERE
+
   @Test
   public void testEntriesForBuyNowProduct() {
     AuctionHouse ahouse1 = new AuctionHouse();
@@ -349,6 +351,7 @@ public class AuctionHouseTest {
     System.out.println(ahouse1.displaySoldProducts());
     System.out.println("unsold products");
     System.out.println(ahouse1.displayUnsoldProducts());
-    
+    assertEquals("1 - S***a bought 3\n" +"2 - S***a bought 7\n",ahouse1.displaySoldProducts());
+   
  } 
 }

@@ -2,6 +2,10 @@ package org.com1027.coursework.q2;
 
 import java.util.ArrayList;
 
+import org.com1027.coursework.q3.Purchase;
+
+
+
 
 
 public class BuyNowProduct extends Product{
@@ -30,7 +34,7 @@ public class BuyNowProduct extends Product{
     }
     
     if(this.quantity>=quantity) {
-      purchases.add(new Purchase(user,quantity));
+      purchases.add(new Purchase(user, quantity));
       this.quantity=this.quantity-quantity;
       return true;
     }
@@ -39,8 +43,11 @@ public class BuyNowProduct extends Product{
   }
   
   public int howManyPurchases() {
-    
-    return purchases.size();
+	  int quantity=0;
+	    for(Purchase purchase:purchases) {
+	    	quantity +=purchase.getQuantityPurchased();
+	    }
+	    return quantity;
   }
   
   

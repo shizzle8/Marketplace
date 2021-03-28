@@ -1,7 +1,6 @@
-package org.com1027.coursework.q2optional;
+package org.com1027.coursework.q3optional;
 
 import java.util.ArrayList;
-
 
 
 
@@ -44,7 +43,8 @@ public class BuyNowProduct extends Product{
 	    for(Purchase purchase:purchases) {
 	    	quantity +=purchase.getQuantityPurchased();
 	    }
-	    return quantity;
+	    return quantity;  
+  
   }
   
   

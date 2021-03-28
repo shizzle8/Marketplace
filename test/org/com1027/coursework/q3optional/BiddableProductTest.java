@@ -62,7 +62,7 @@ public class BiddableProductTest {
    assertEquals("1: teddy = no bids",product1.displayHistory());   
    
    //Stella enters a bid of 5.00
-   assertEquals(true, product1.attemptToPurchase(user1, 5.00));
+   assertEquals(true, product1.attemptedToPurchase(user1, 5.00));
    assertEquals(5.00,product1.getCurrentPrice(),00);
    //check that the display methods are as intended
    //System.out.println(product1.displayUserInfoForProduct());
@@ -71,7 +71,7 @@ public class BiddableProductTest {
    assertEquals("1: teddy = \n"+"S***a bid £5.0\n",product1.displayHistory());   
    
    //Joe enters a bid of 2.00
-   assertEquals(false, product1.attemptToPurchase(user2, 2.00));
+   assertEquals(false, product1.attemptedToPurchase(user2, 2.00));
    //highest bid not changed
    assertEquals(5.00,product1.getCurrentPrice(),00);
    //check that the display methods are as intended
@@ -81,7 +81,7 @@ public class BiddableProductTest {
    assertEquals("1: teddy = \n"+"S***a bid £5.0\n",product1.displayHistory());   
  
    //Joe enters a bid of 7.00
-   assertEquals(true, product1.attemptToPurchase(user2, 7.00));
+   assertEquals(true, product1.attemptedToPurchase(user2, 7.00));
    assertEquals(7.00,product1.getCurrentPrice(),00);
    //System.out.println(product1.displayUserInfoForProduct());
    assertEquals("J***e bid £7.0",product1.displayUserInfoForProduct());
@@ -104,15 +104,15 @@ public class BiddableProductTest {
    User user2 = new User("Joe");
    
    //Stella enters a bid of 5.00
-   assertEquals(true, product1.attemptToPurchase(user1, 5.00));
+   assertEquals(true, product1.attemptedToPurchase(user1, 5.00));
    assertFalse(product1.isProductSold());
   
    //Joe enters a bid of 2.00 so no change
-   assertEquals(false, product1.attemptToPurchase(user2, 2.00));
+   assertEquals(false, product1.attemptedToPurchase(user2, 2.00));
    assertFalse(product1.isProductSold());
    
    //Joe enters a bid of 17.00 so over reserved price now
-   assertEquals(true, product1.attemptToPurchase(user2, 17.00));
+   assertEquals(true, product1.attemptedToPurchase(user2, 17.00));
    assertTrue(product1.isProductSold());
 
  }
