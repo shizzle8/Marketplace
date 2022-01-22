@@ -1,4 +1,4 @@
-package org.com1027.coursework.q3;
+package org.com1027.coursework.q3optional;
 
 import java.util.HashMap;
 
@@ -19,10 +19,11 @@ public class User {
     }
   }
   
+  // display all the users successful bids on a product
   public String displayAllPurchases() {
 	  return "All Purchased Products: \n" + displayPurchases() + displaySuccessfulBids();
   }
-  
+  // display all the successful purchases of the user
   public String displayPurchases() {
 	  String text="Purchases: \n";
 	  for(HashMap.Entry<Integer,Integer> p:purchases.entrySet()) {
@@ -30,7 +31,7 @@ public class User {
 	  }
 	  return text;
   }
-  
+  // display all the successful bids of the user
   public String displaySuccessfulBids() {
 	  String text="Successful Bids: \n";
 	  for(HashMap.Entry<Integer,Double> p:successfulBids.entrySet()) {
@@ -39,7 +40,7 @@ public class User {
 	  return text;
   }
   
-  
+  // allow us to store the users purhcases in a hashmap allowing to see all the users purchases
   public void buy(int productId, int quantity) {
 	  if(productId<0 || quantity<1) {
 		  throw new IllegalArgumentException();
@@ -48,7 +49,7 @@ public class User {
 	  purchases.put(productId, quantity);
 	  }
   }
-  
+  // check if the auction bid was succesful and if it was it will store it in the successful bids hashmap
   public void wonAuction(int productId, double winningPrice) {
 	  if(productId<0 || winningPrice<0) {
 		  throw new IllegalArgumentException();
