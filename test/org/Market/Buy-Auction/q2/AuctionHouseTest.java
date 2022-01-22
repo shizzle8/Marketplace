@@ -1,5 +1,5 @@
 
-package org.com1027.coursework.q3;
+package org.com1027.coursework.q2;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -26,7 +26,9 @@ public class AuctionHouseTest {
     User user = new User("Stella");
     assertEquals(false,ahouse1.checkExistence(product));
     assertEquals("",ahouse1.displaySoldProducts());
-    assertEquals(false,ahouse1.placeBid(product, user, 10.00));       
+    assertEquals(true,ahouse1.placeBid(product, user, 10.00));      
+    assertEquals(true,ahouse1.placeBid(product, user, 11.00));
+    assertEquals(false,ahouse1.placeBid(product, user, 5.00));
  }  
 
 
@@ -132,7 +134,7 @@ public class AuctionHouseTest {
     ahouse1.register(product2, user);  
     ahouse1.endAuction(product1);
     ahouse1.endAuction(product2);  
-    //System.out.println("display unsold auction with no bids and purchases \n");
+   // System.out.println("display unsold auction with no bids and purchases \n");
     //System.out.println(ahouse1.displayUnsoldProducts());
     assertThat(ahouse1.displayUnsoldProducts(), 
        anyOf(is("1 - teddy"+"\n"+"2 - doll"+"\n"), is("2 - doll"+"\n"+"1 - teddy"+"\n")));
@@ -161,12 +163,12 @@ public class AuctionHouseTest {
     //System.out.println("display unsold auction with no bids meeting reserve \n");
     //System.out.println(ahouse1.displayUnsoldProducts());
     ahouse1.endAuction(product2); 
-    //System.out.println(ahouse1.displayUnsoldProducts());
+   // System.out.println(ahouse1.displayUnsoldProducts());
     //order of map not guaranteed so for simple two product case
     //so the assert needs to be more complex than just assertEquals
     assertThat(ahouse1.displayUnsoldProducts(), 
          anyOf(is("1 - teddy"+"\n"+"2 - doll"+"\n"), is("2 - doll"+"\n"+"1 - teddy"+"\n")));
-   
+    
  } 
   /**
    * Creating a valid auction and registering biddable product. 
@@ -192,10 +194,9 @@ public class AuctionHouseTest {
     //System.out.println("display sold auction with bids meeting reserve \n");
     //System.out.println(ahouse1.displaySoldProducts());
     assertThat(ahouse1.displaySoldProducts(), 
-        anyOf(is("1 - S***a bid Â£12.0"+"\n"+"2 - S***a bid Â£22.0"+"\n"), is("2 - S***a bid Â£22.0"+"\n"+"1 - S***a bid Â£12.0"+"\n")));
+        anyOf(is("1 - S***a bid £12.0"+"\n"+"2 - S***a bid £22.0"+"\n"), is("2 - S***a bid £22.0"+"\n"+"1 - S***a bid £12.0"+"\n")));
  } 
   
-
 
   /* new tests for Q2 because additional buy now */
   
@@ -272,52 +273,5 @@ public class AuctionHouseTest {
     assertThat(ahouse1.displaySoldProducts(), 
         anyOf(is("1 - S***a bought 9\n"+"2 - S***a bought 5\n"), is("2 - S***a bought 5\n"+"1 - S***a bought 9\n")));
    
- } 
-  
-  //Tests added for Question 3
-  /**
-   * Initially there will be no purchases or successful bids
-   */
-  @Test
-  public void testNoentriesForDisplayAllPurchases() {
-    AuctionHouse ahouse1 = new AuctionHouse();
-    User user = new User("Stella");
-    //System.out.println(user.displayAllPurchases());
-    assertEquals("All Purchased Products: \n"+"Purchases: \n"+"Successful Bids: \n",user.displayAllPurchases());
-} 
- 
-  /**
-   * Create 4 products, create and auction for each of them, purchase them by either bidding
-   * meeting the reserved price of buying all the quantities of the buy now ones.
-   * Check that display prints out the product ids and their associated quantities or bid values.
-   */
-  @Test
-  public void testEntriesForDisplayAllPurchases() {
-    AuctionHouse ahouse1 = new AuctionHouse();
-    BiddableProduct product1 = new BiddableProduct(1,"teddy",5.00);
-    BiddableProduct product2 = new BiddableProduct(2,"truck",10.00);
-    BuyNowProduct product3 = new BuyNowProduct(3,"doll",20.00,5);
-    BuyNowProduct product4 = new BuyNowProduct(4,"ball",5.00,10);
-    User user = new User("Stella");
-    user.displayPurchases();
-    ahouse1.register(product1, user);  
-    ahouse1.register(product2, user);  
-    ahouse1.register(product3, user);  
-    ahouse1.register(product4, user);  
-    ahouse1.placeBid(product1, user, 5.00);
-    ahouse1.endAuction(product1);
-    ahouse1.placeBid(product2, user, 10.00);
-    ahouse1.endAuction(product2);  
-    ahouse1.buyNow(product3, user, 3);
-    ahouse1.buyNow(product4, user, 7);
-    //System.out.println(user.displayAllPurchases());
-    assertEquals("All Purchased Products: \n"+"Purchases: \n"+
-         "3 with quantity 3\n" + 
-         "4 with quantity 7\n"+
-         "Successful Bids: \n" +
-         "1 at a cost of 5.0\n"+
-         "2 at a cost of 10.0\n",
-         user.displayAllPurchases());
-
  } 
 }

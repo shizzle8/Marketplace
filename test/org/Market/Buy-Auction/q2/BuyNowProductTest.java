@@ -91,7 +91,7 @@ public class BuyNowProductTest {
     
    //Joe buys 2
    assertEquals(true, product1.attemptToPurchase(user2, 2));
-   assertEquals("J***e bought 2",product1.displayUserInfoForProduct());
+   assertEquals("S***a bought 5\n" +"J***e bought 2\n",product1.displayUserInfoForProduct());
    //System.out.println(product1.displayHistory());
    assertEquals("1: teddy quantity: 9\n"+"buy now history: \n" + "S***a bought 5\n" + "J***e bought 2\n",  
        product1.displayHistory());
